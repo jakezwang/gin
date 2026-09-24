@@ -3132,6 +3132,8 @@ func TestIsWebsocketConnectionHeaders(t *testing.T) {
 		{"optional whitespace", []string{"keep-alive, \tUpgrade\t "}, "websocket", true},
 		{"repeated fields", []string{"keep-alive", "Upgrade"}, "websocket", true},
 		{"empty first field", []string{"", "Upgrade"}, "websocket", true},
+		{"comma-only field", []string{",,"}, "websocket", false},
+		{"empty list entries", []string{",,Upgrade,,"}, "websocket", true},
 		{"token prefix", []string{"notupgrade"}, "websocket", false},
 		{"token suffix", []string{"upgrades"}, "websocket", false},
 		{"non-HTTP whitespace", []string{"\u00a0upgrade"}, "websocket", false},
